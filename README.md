@@ -1,6 +1,13 @@
 # fastFOREX Currency Exchange Rate API Client
 You'll need an API key to use the API client. [Get a FREE API Key](https://console.fastforex.io).
 
+## Installation
+
+With [Composer](https://getcomposer.org):
+```bash
+composer require fastforex/fastforex-php-client
+```
+
 ## Quick Start
 Set the API key once in your bootstrap code. 
 ```php
