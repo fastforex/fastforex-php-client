@@ -1,4 +1,7 @@
 # fastFOREX Currency Exchange Rate API Client
+
+[![Version](http://img.shields.io/packagist/v/fastforex/fastforex-php-client.svg?style=flat-square)](https://packagist.org/packages/fastforex/fastforex-php-client)
+
 You'll need an API key to use the API client. [Get a FREE API Key](https://console.fastforex.io).
 
 ## Installation
