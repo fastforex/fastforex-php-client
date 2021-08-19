@@ -33,9 +33,11 @@ class ClientFailureTest extends \PHPUnit\Framework\TestCase
         $obj_client->fetchOne('GBP', '');
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Please supply a target currency');
+        /** @phpstan-ignore-next-line */
         $obj_client->fetchOne('GBP', 0);
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Please supply a target currency');
+        /** @phpstan-ignore-next-line */
         $obj_client->fetchOne('GBP', null);
     }
 
