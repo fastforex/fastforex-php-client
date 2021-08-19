@@ -8,6 +8,13 @@ use FastForex\Tests\Stub\Transport;
 class ClientUrlTest extends \PHPUnit\Framework\TestCase
 {
 
+    private function assertResponsePayload($method, $obj_response)
+    {
+        $this->assertIsObject($obj_response);
+        $this->assertObjectHasAttribute('test', $obj_response);
+        $this->assertEquals($method, $obj_response->test);
+    }
+
     /**
      * Test URL construction for fetch-all
      */
@@ -15,13 +22,14 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
     {
         Client::setApiKey('test_key_1');
         $obj_client = new Client();
-        $obj_transport = new Transport();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
         $obj_client->setTransport($obj_transport);
-        $obj_client->fetchAll();
+        $obj_response = $obj_client->fetchAll();
         $this->assertEquals(
             'https://api.fastforex.io/fetch-all?api_key=test_key_1&from=USD',
             $obj_transport->getLastUrl()
         );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
     }
 
     /**
@@ -31,13 +39,14 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
     {
         Client::setApiKey('test_key_2');
         $obj_client = new Client();
-        $obj_transport = new Transport();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
         $obj_client->setTransport($obj_transport);
-        $obj_client->fetchOne('GBP', 'EUR');
+        $obj_response = $obj_client->fetchOne('GBP', 'EUR');
         $this->assertEquals(
             'https://api.fastforex.io/fetch-one?api_key=test_key_2&from=GBP&to=EUR',
             $obj_transport->getLastUrl()
         );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
     }
 
     /**
@@ -47,13 +56,14 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
     {
         Client::setApiKey('test_key_3');
         $obj_client = new Client();
-        $obj_transport = new Transport();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
         $obj_client->setTransport($obj_transport);
-        $obj_client->fetchMulti('EUR', ['CHF','USD','GBP']);
+        $obj_response = $obj_client->fetchMulti('EUR', ['CHF','USD','GBP']);
         $this->assertEquals(
             'https://api.fastforex.io/fetch-multi?api_key=test_key_3&from=EUR&to=CHF%2CUSD%2CGBP',
             $obj_transport->getLastUrl()
         );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
     }
 
     /**
@@ -63,13 +73,14 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
     {
         Client::setApiKey('test_key_4');
         $obj_client = new Client();
-        $obj_transport = new Transport();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
         $obj_client->setTransport($obj_transport);
-        $obj_client->usage();
+        $obj_response = $obj_client->usage();
         $this->assertEquals(
             'https://api.fastforex.io/usage?api_key=test_key_4',
             $obj_transport->getLastUrl()
         );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
     }
 
     /**
@@ -79,13 +90,14 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
     {
         Client::setApiKey('test_key_5');
         $obj_client = new Client();
-        $obj_transport = new Transport();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
         $obj_client->setTransport($obj_transport);
-        $obj_client->currencies();
+        $obj_response = $obj_client->currencies();
         $this->assertEquals(
             'https://api.fastforex.io/currencies?api_key=test_key_5',
             $obj_transport->getLastUrl()
         );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
     }
 
     /**
@@ -95,12 +107,13 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
     {
         Client::setApiKey('test_key_6');
         $obj_client = new Client();
-        $obj_transport = new Transport();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
         $obj_client->setTransport($obj_transport);
-        $obj_client->convert('CHF', 'EUR', 47.99);
+        $obj_response = $obj_client->convert('CHF', 'EUR', 47.99);
         $this->assertEquals(
             'https://api.fastforex.io/convert?api_key=test_key_6&from=CHF&to=EUR&amount=47.99',
             $obj_transport->getLastUrl()
         );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
     }
 }
