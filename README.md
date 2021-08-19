@@ -2,7 +2,7 @@
 
 [![Version](http://img.shields.io/packagist/v/fastforex/fastforex-php-client.svg?style=flat-square)](https://packagist.org/packages/fastforex/fastforex-php-client)
 
-You'll need an API key to use the API client. [Get a FREE API Key](https://console.fastforex.io).
+You'll need an API key to use the API client. [Get a Free Trial API Key](https://console.fastforex.io).
 
 ## Installation
 
@@ -87,11 +87,9 @@ try {
 }
 ```
 
-## Free Plan Restrictions
+## Free Trial
 
-**Please note: USD is the only supported base currency on the free plan**
-
-**Please note: `convert()` is not available on the free plan**
+Our 7-day free trial API keys are unrestricted. All features and full API quota. 
 
 ## API Documentation
 
