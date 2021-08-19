@@ -10,7 +10,7 @@ interface TransportInterface
     /**
      * Make an API call, return the response object
      *
-     * @param $url
+     * @param string $url
      * @return \stdClass
      */
     public function fetch($url);

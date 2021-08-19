@@ -16,8 +16,9 @@ class Stream implements TransportInterface
     /**
      * Fetch a URL, decode and return the response object
      *
-     * @param $url
+     * @param string $url
      * @return \stdClass
+     * @throws APIException
      */
     public function fetch($url) {
         $response = @file_get_contents(
