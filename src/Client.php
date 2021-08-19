@@ -23,6 +23,11 @@ class Client
     protected static $api_key = null;
 
     /**
+     * @var TransportInterface|null
+     */
+    protected $obj_transport = null;
+
+    /**
      * Set the API key
      *
      * @param string $api_key
@@ -163,7 +168,22 @@ class Client
      */
     protected function getTransport()
     {
-        return new Stream();
+        if (empty($this->obj_transport)){
+            $this->obj_transport = new Stream();
+        }
+        return $this->obj_transport;
+    }
+
+    /**
+     * Set a transport provider
+     *
+     * @param TransportInterface $obj_transport
+     * @return self
+     */
+    public function setTransport(TransportInterface $obj_transport)
+    {
+        $this->obj_transport = $obj_transport;
+        return $this;
     }
 
     /**

@@ -1,5 +1,6 @@
 # fastFOREX Currency Exchange Rate API Client
 
+![Tests](https://github.com/fastforex/fastforex-php-client/actions/workflows/tests.yml/badge.svg)
 [![Version](http://img.shields.io/packagist/v/fastforex/fastforex-php-client.svg?style=flat-square)](https://packagist.org/packages/fastforex/fastforex-php-client)
 
 You'll need an API key to use the API client. [Get a Free Trial API Key](https://console.fastforex.io).

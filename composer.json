@@ -9,6 +9,11 @@
             "FastForex\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "FastForex\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "fastFOREX",
@@ -20,6 +25,19 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "overtrue/phplint": "^2.3",
+        "phpstan/phpstan": "^0.12",
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "lint": "phplint ./ --exclude=vendor --extensions=php",
+        "static": "phpstan analyse src tests -c phpstan.neon",
+        "all": [
+            "@test",
+            "@lint",
+            "@static"
+        ]
     }
 }
