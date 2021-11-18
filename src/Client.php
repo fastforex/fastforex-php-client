@@ -13,6 +13,7 @@ class Client
         FETCH_ALL = '/fetch-all',
         FETCH_ONE = '/fetch-one',
         FETCH_MULTI = '/fetch-multi',
+        FETCH_HISTORICAL = '/historical',
         FETCH_USAGE = '/usage',
         FETCH_CONVERT = '/convert',
         FETCH_CURRENCIES = '/currencies';
@@ -134,6 +135,31 @@ class Client
     }
 
     /**
+     * Fetch historical currency rates, using the supplied date and currency.
+     *
+     * By default, gets all rates with USD as the base.
+     *
+     * @param \DateTimeInterface $date
+     * @param string $from
+     * @param array $to
+     * @return object|\stdClass
+     * @throws Exception\APIException
+     */
+    public function historical(\DateTimeInterface $date, $from = 'USD', array $to = [])
+    {
+        $arr_params = [
+            'date' => $date->format('Y-m-d'),
+            'from' => $from,
+        ];
+        if (!empty($to)) {
+            $arr_params['to'] = implode(',', $to);
+        }
+        return $this->getTransport()->fetch(
+            $this->buildUrl(self::FETCH_HISTORICAL, $arr_params)
+        );
+    }
+
+    /**
      * Fetch all supported currencies
      *
      * @return object|\stdClass
@@ -198,9 +224,9 @@ class Client
         if (empty(self::$api_key)) {
             throw new \InvalidArgumentException('API key not set');
         }
-        return self::BASE_URL . $action . '?' . http_build_query(
-            array_merge(['api_key' => self::$api_key], $params)
-        );
+        $params = array_merge(['api_key' => self::$api_key], $params);
+        ksort($params);
+        return self::BASE_URL . $action . '?' . http_build_query($params);
     }
 
 }

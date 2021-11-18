@@ -67,6 +67,16 @@ Fetch recent API usage
 $response = (new FastForex\Client())->usage();
 ```
 
+Get all the historical exchange rates for 1st April 2021, with `USD` base:
+```php
+$response = (new FastForex\Client())->historical(new \DateTime('2021-04-01'), 'USD');
+```
+
+Get a subset of historical exchange rates for 1st April 2021, with `USD` base:
+```php
+$response = (new FastForex\Client())->historical(new \DateTime('2021-04-01'), 'USD', ['EUR', 'GBP', 'CHF']);
+```
+
 ## Error Handling
 
 We throw the following Exceptions:

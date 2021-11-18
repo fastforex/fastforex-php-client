@@ -67,6 +67,42 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test URL construction for historical with target currencies
+     */
+    public function testHistoricalUrlWithTo()
+    {
+        Client::setApiKey('test_key_3b');
+        $obj_client = new Client();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
+        $obj_client->setTransport($obj_transport);
+        $obj_date = new \DateTime('-10 days');
+        $obj_response = $obj_client->historical($obj_date, 'EUR', ['CHF','USD','GBP']);
+        $this->assertEquals(
+            sprintf('https://api.fastforex.io/historical?api_key=test_key_3b&date=%s&from=EUR&to=CHF%%2CUSD%%2CGBP', $obj_date->format('Y-m-d')),
+            $obj_transport->getLastUrl()
+        );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
+    }
+
+    /**
+     * Test URL construction for historical WITHOUT target currencies
+     */
+    public function testHistoricalUrlWithoutTo()
+    {
+        Client::setApiKey('test_key_3c');
+        $obj_client = new Client();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
+        $obj_client->setTransport($obj_transport);
+        $obj_date = new \DateTime('-15 days');
+        $obj_response = $obj_client->historical($obj_date, 'GBP');
+        $this->assertEquals(
+            sprintf('https://api.fastforex.io/historical?api_key=test_key_3c&date=%s&from=GBP', $obj_date->format('Y-m-d')),
+            $obj_transport->getLastUrl()
+        );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
+    }
+
+    /**
      * Test URL construction for fetch usage
      */
     public function testFetchUsageUrl()
@@ -111,7 +147,7 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
         $obj_client->setTransport($obj_transport);
         $obj_response = $obj_client->convert('CHF', 'EUR', 47.99);
         $this->assertEquals(
-            'https://api.fastforex.io/convert?api_key=test_key_6&from=CHF&to=EUR&amount=47.99',
+            'https://api.fastforex.io/convert?amount=47.99&api_key=test_key_6&from=CHF&to=EUR',
             $obj_transport->getLastUrl()
         );
         $this->assertResponsePayload(__METHOD__, $obj_response);
