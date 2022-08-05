@@ -14,6 +14,7 @@ class Client
         FETCH_ONE = '/fetch-one',
         FETCH_MULTI = '/fetch-multi',
         FETCH_HISTORICAL = '/historical',
+        FETCH_TIME_SERIES = '/time-series',
         FETCH_USAGE = '/usage',
         FETCH_CONVERT = '/convert',
         FETCH_CURRENCIES = '/currencies';
@@ -156,6 +157,38 @@ class Client
         }
         return $this->getTransport()->fetch(
             $this->buildUrl(self::FETCH_HISTORICAL, $arr_params)
+        );
+    }
+
+    /**
+     * Fetch a historical time-series currency rates, using the supplied dates and currencies.
+     *
+     * @param \DateTimeInterface $start
+     * @param \DateTimeInterface $end
+     * @param string $interval
+     * @param string $from
+     * @param string $to
+     * @return object|\stdClass
+     * @throws Exception\APIException
+     */
+    public function timeSeries(
+        \DateTimeInterface $start,
+        \DateTimeInterface $end,
+        $interval,
+        $from,
+        $to
+    ) {
+        return $this->getTransport()->fetch(
+            $this->buildUrl(
+                self::FETCH_TIME_SERIES,
+                [
+                    'start' => $start->format('Y-m-d'),
+                    'end' => $end->format('Y-m-d'),
+                    'interval' => $interval,
+                    'from' => $from,
+                    'to' => $to,
+                ]
+            )
         );
     }
 

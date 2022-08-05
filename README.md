@@ -77,6 +77,17 @@ Get a subset of historical exchange rates for 1st April 2021, with `USD` base:
 $response = (new FastForex\Client())->historical(new \DateTime('2021-04-01'), 'USD', ['EUR', 'GBP', 'CHF']);
 ```
 
+Get a 7-day time-series dataset for `EUR` to `CHF`
+
+```php
+$response = (new FastForex\Client())->timeSeries(
+        new \DateTime('2021-04-01'),
+        new \DateTime('2021-04-07'),
+        'EUR',
+        'CHF'
+    );
+```
+
 ## Error Handling
 
 We throw the following Exceptions:

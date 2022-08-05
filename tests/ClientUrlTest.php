@@ -85,6 +85,29 @@ class ClientUrlTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test URL construction for daily time-series with target currencies
+     */
+    public function testDailyTimeSeriesUrl()
+    {
+        Client::setApiKey('test_key_3x');
+        $obj_client = new Client();
+        $obj_transport = (new Transport())->setNextResponse((object)['test' => __METHOD__]);
+        $obj_client->setTransport($obj_transport);
+        $obj_start = new \DateTime('-10 days');
+        $obj_end = new \DateTime('-3 days');
+        $obj_response = $obj_client->timeSeries($obj_start, $obj_end, 'P1D', 'EUR', 'CHF');
+        $this->assertEquals(
+            sprintf(
+                'https://api.fastforex.io/time-series?api_key=test_key_3x&end=%s&from=EUR&interval=P1D&start=%s&to=CHF',
+                $obj_end->format('Y-m-d'),
+                $obj_start->format('Y-m-d')
+            ),
+            $obj_transport->getLastUrl()
+        );
+        $this->assertResponsePayload(__METHOD__, $obj_response);
+    }
+
+    /**
      * Test URL construction for historical WITHOUT target currencies
      */
     public function testHistoricalUrlWithoutTo()
